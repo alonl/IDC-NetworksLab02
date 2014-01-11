@@ -1,0 +1,100 @@
+<html>
+    <head>
+        <style>
+            #container {
+                position: fixed;
+                width: 340px;
+                height: 280px;
+                top: 50%;
+                left: 50%;
+                margin-top: -200px;
+                margin-left: -550px;
+            } 
+
+            form {
+                margin: 0 auto;
+                margin-top: 20px;
+            }
+            label {
+                color: #fff;
+                display: inline-block;
+                margin-left: 18px;
+                padding-top: 10px;
+                font-size: 14px;
+            }
+
+            p a {
+                font-size: 11px;
+                color: #aaa;
+                float: right;
+                margin-top: -13px;
+                margin-right: 20px;
+            }
+            p a:hover {
+                color: #555;
+            }
+            input {
+                font-family: "Helvetica Neue", Helvetica, sans-serif;
+                font-size: 12px;
+                outline: none;
+            }
+            input[type=text],
+            input[type=password] {
+                color: #777;
+                padding-left: 10px;
+                margin: 10px;
+                margin-top: 12px;
+                margin-left: 18px;
+                width: 290px;
+                height: 35px;
+            }
+
+            input[type=checkbox] {
+                margin-left: 20px;
+                margin-top: 30px;
+            }
+            .check {	aq
+                     margin-left: 3px;
+            }
+            input[type=submit] {
+                float: right;
+                margin-right: 20px;
+                margin-top: 20px;
+                width: 80px;
+                height: 30px;
+            }
+
+
+        </style>
+
+        <title>AS Task Manager</title>        
+    </head>
+
+
+
+
+    <body>
+        <table align="left" width="575" height="575" background="img/back.jpg">
+
+            <tr>
+                <td > 
+                    <div id="container">       
+                        <form>
+                            <font size="5" color="white" >Hello! 
+                            </font>
+                            <font size="4" color="white" ></br></br>Please enter your Email to login</font>
+                            </br></br>
+                            <label for="email">* Email:</label>
+                            <input type="text" id="email" name="email" required>
+
+                            <div id="lower">
+                                <input type="submit" value="Login">
+                            </div>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+    </body>
+</html>

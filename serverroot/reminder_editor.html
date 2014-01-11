@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en" ng-app="RemindersApp">
+    <head>
+        <meta charset="utf-8">
+        <title>Reminders</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/app.css">
+        <script src="js/lib/angular.min.js"></script>
+        <script src="js/remindersEditCtrl.js"></script>
+        <script src="js/lib/jquery-1.10.1.min.js"></script>
+        <script src="js/lib/bootstrap.min.js"></script>
+
+    </head>
+    <body ng-controller="RemindersEditCtrl">
+        <div id="wrapper">
+
+            <a href="/reminders.html"><h2>[Cancel]</h2></a>
+
+            <div id="editor">
+
+                <form id="form" class="form-horizontal" method="GET" action="/submit_reminder.html">
+
+                    <div class="control-group">
+                        <label class="control-label" for="title">Title:</label>
+                        <div class="controls">
+                            <input type="text" id="title" name="title" ng-model="item.title"
+                                   placeholder="the reminder title" required min="2" required>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="dueDate">Due Date:</label>
+                        <div class="controls">
+                            <input type="datetime-local" id="dueDate" name="dueDate" ng-model="item.dueDate" required>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="phone">Phone for SMS:</label>
+                        <div class="controls">
+                            <input type="tel" id="phone" name="phone" ng-model="item.phone" placeholder="0500000000" maxlength="10">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="content">Content:</label>
+                        <div class="controls">
+                            <textarea id="content" name="content" form="form" ng-model="item.content">
+                            </textarea>
+                        </div>
+                    </div>
+                    
+                    <input type="hidden" id="id" name="id" value={{item.id}}>
+
+                    <div class="control-group">
+                        <hr/>
+                        <div class="controls">
+                            <button type="button" class="btn btn-primary"
+                                    ng-disabled="!item.title" ng-hide="item.id"
+                                    ng-click="addItem(item)">Add Item
+                            </button>
+                            <button type="button" class="btn btn-primary"
+                                    ng-disabled="!item.title" ng-show="item.id"
+                                    ng-click="updateItem(item)">Save Item
+                            </button>
+                            <button type="button" class="btn" ng-click="resetForm()">Reset</button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </body>
+</html>

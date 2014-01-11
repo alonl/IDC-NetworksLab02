@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en" ng-app="TasksApp">
+    <head>
+        <meta charset="utf-8">
+        <title>Tasks</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/app.css">
+        <script src="js/lib/angular.min.js"></script>
+        <script src="js/tasksCtrl.js"></script>
+        <script src="js/lib/jquery-1.10.1.min.js"></script>
+        <script src="js/lib/bootstrap.min.js"></script>
+
+    </head>
+    <body ng-controller="TasksCtrl">
+        <div id="wrapper">
+
+            <a href="/main.html"><h2>[Home]</h2></a>
+
+            <div id="editor">
+
+                <div class="alert alert-error" ng-show="error">{{errorMessage}}</div>
+
+                <form id="form" class="form-horizontal">
+
+                    <div class="control-group">
+                        <label class="control-label" for="title">Title:</label>
+                        <div class="controls">
+                            <input type="text" id="title" ng-model="item.title"
+                                   placeholder="the task title" required min="2" required>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="dueDate">Due Date: <small>(format: yyyy-MM-ddThh:mm)</small></label>
+                        <div class="controls">
+                            <input type="datetime-local" id="dueDate" placeholder="2015-01-01T01:23" ng-model="item.dueDate" required>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="toMail">Recipient:</label>
+                        <div class="controls">
+                            <input type="text" id="toMail" ng-model="item.toMail"
+                                   placeholder="the recipient mail" required min="2" required>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="phone">Phone for SMS:</label>
+                        <div class="controls">
+                            <input type="tel" id="phone" ng-model="item.phone" placeholder="0500000000" maxlength="10">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="content">Content:</label>
+                        <div class="controls">
+                            <textarea id="content" name="content" form="form" ng-model="item.content">
+                            </textarea>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <hr/>
+                        <div class="controls">
+                            <button type="button" class="btn btn-primary"
+                                    ng-disabled="!item.title" ng-hide="editMode"
+                                    ng-click="addItem(item)">Add Item
+                            </button>
+                            <button type="button" class="btn btn-primary"
+                                    ng-show="editMode"
+                                    ng-click="updateItem(item)">Save Item
+                            </button>
+                            <button type="button" class="btn" ng-click="resetForm()">Reset</button>
+                        </div>
+                    </div>
+                    
+                </form>
+
+            </div>
+
+            <div class="alert alert-block alert-error notification" data-ng-show="deleteNotification">
+                <h4>Are you sure?</h4>
+                <div class="form-controls-alert">
+                    <a href="" class="btn btn-success" data-ng-click="showDeleteNotification(false)">No</a>
+                    <a href="" class="btn btn-danger" data-ng-click="remove()">Yes</a>
+                </div>
+            </div>
+
+            <hr/>
+            <h3>Your Tasks:</h3>
+
+            <div class="alert alert-info" ng-show="queriesList.length == 0">No items found</div>
+            <table class="table table-bordered table-striped" ng-show="itemsList.length > 0">
+                <thead>
+                    <tr>
+                        <th style="text-align: center;">Title</th>
+                        <th style="text-align: center; width: 190px">Created at</th>
+                        <th style="text-align: center; width: 190px">Due date</th>
+                        <th style="text-align: center; width: 100px">Phone</th>
+                        <th style="text-align: center; width: 100px">Recipient</th>
+                        <th style="text-align: center; width: 120px">Status</th>
+                        <th style="text-align: center; width: 80px">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in itemsList | orderBy:predicate">
+                        <td>{{item.title}}</td>
+                        <td>{{item.createdAt | date:'medium'}}</td>
+                        <td>{{item.dueDate | date:'medium'}}</td>
+                        <td>{{item.phone}}</td>
+                        <td>{{item.toMail}}</td>
+                        <td>{{item.status | taskstatus}}</td>
+                        <td style="width: 100px; text-align: center;">
+                            <button class="btn btn-mini btn-danger" ng-click="showDeleteNotification(true, item)">Delete
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+
+    </body>
+</html>

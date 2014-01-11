@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" ng-app="PollsApp">
+    <head>
+        <meta charset="utf-8">
+        <title>Polls</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/app.css">
+        <script src="js/lib/angular.min.js"></script>
+        <script src="js/pollsCtrl.js"></script>
+        <script src="js/lib/jquery-1.10.1.min.js"></script>
+        <script src="js/lib/bootstrap.min.js"></script>
+
+    </head>
+    <body ng-controller="PollsCtrl">
+        <div id="wrapper">
+
+            <a href="/main.html"><h2>[Home]</h2></a>
+
+            <div id="editor">
+
+                <div class="alert alert-error" ng-show="error">{{errorMessage}}</div>
+
+                <form id="form" class="form-horizontal">
+
+                    <div class="control-group">
+                        <label class="control-label" for="title">Title:</label>
+                        <div class="controls">
+                            <input type="text" id="title" ng-model="item.title"
+                                   placeholder="the poll title" required min="2" required>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="content">Content:</label>
+                        <div class="controls">
+                            <textarea id="content" name="content" form="form" ng-model="item.content"></textarea>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="recipients">Recipients:  <small>(each in a separate line)</small></label>
+                        <div class="controls">
+                            <textarea id="recipients" name="recipients" form="form" ng-model="item.recipients"></textarea>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="answers">Answers:  <small>(each in a separate line)</small></label>
+                        <div class="controls">
+                            <textarea id="answers" name="answers" form="form" ng-model="item.answers"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <hr/>
+                        <div class="controls">
+                            <button type="button" class="btn btn-primary"
+                                    ng-disabled="!item.title" ng-hide="editMode"
+                                    ng-click="addItem(item)">Add Item
+                            </button>
+                            <button type="button" class="btn btn-primary"
+                                    ng-show="editMode"
+                                    ng-click="updateItem(item)">Save Item
+                            </button>
+                            <button type="button" class="btn" ng-click="resetForm()">Reset</button>
+                        </div>
+                    </div>
+                    
+                </form>
+
+            </div>
+
+            <div class="alert alert-block alert-error notification" data-ng-show="deleteNotification">
+                <h4>Are you sure?</h4>
+                <div class="form-controls-alert">
+                    <a href="" class="btn btn-success" data-ng-click="showDeleteNotification(false)">No</a>
+                    <a href="" class="btn btn-danger" data-ng-click="remove()">Yes</a>
+                </div>
+            </div>
+
+            <hr/>
+            <h3>Your Polls:</h3>
+
+            <div class="alert alert-info" ng-show="queriesList.length == 0">No items found</div>
+            <table class="table table-bordered table-striped" ng-show="itemsList.length > 0">
+                <thead>
+                    <tr>
+                        <th style="text-align: center;">Title</th>
+                        <th style="text-align: center; width: 190px">Created at</th>
+                        <th style="text-align: center; width: 300px">Recipients</th>
+                        <th style="text-align: center; width: 300px">Answers</th>
+                        <th style="text-align: center; width: 70px">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in itemsList | orderBy:predicate">
+                        <td>{{item.title}}</td>
+                        <td>{{item.createdAt | date:'medium'}}</td>
+                        <td><pre>{{item.recipients | recipients_filter}}</pre></td>
+                        <td><pre>{{item.answers | answers_filter}}</pre></td>
+                        <td style="width: 100px; text-align: center;">
+                            <button class="btn btn-mini btn-danger" ng-click="showDeleteNotification(true, item)">Delete
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+
+    </body>
+</html>
