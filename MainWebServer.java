@@ -1,22 +1,18 @@
 
-
-
 import java.io.File;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Properties;
 
-
-
 public class MainWebServer {
 
 	private int port;
-    private File root;
+	private File root;
 	private String defaultPage;
 	private int maxThreads;
-    private SMTPApp underlyingApp;
-	
+	private SMTPApp underlyingApp;
+
 	private static HelperLogger logger = new HelperLogger(MainWebServer.class);
 
 	public MainWebServer(Properties serverProperties, SMTPApp smtpApp) {
@@ -24,18 +20,18 @@ public class MainWebServer {
 		root = new File(serverProperties.getProperty(MainRunner.ROOT_PROPERTY));
 		defaultPage = serverProperties.getProperty(MainRunner.DEFAULT_PAGE_PROPERTY);
 		maxThreads = Integer.parseInt(serverProperties.getProperty(MainRunner.MAX_THREADS_PROPERTY));
-        underlyingApp = smtpApp;
+		underlyingApp = smtpApp;
 	}
 
-    public File getRoot() {
-        return root;
-    }
+	public File getRoot() {
+		return root;
+	}
 
-    public String getDefaultPage() {
-        return defaultPage;
-    }
+	public String getDefaultPage() {
+		return defaultPage;
+	}
 
-    public void startServer() {
+	public void startServer() {
 		logger.info("Creating a thread pool with size " + maxThreads);
 		HTTPThreadPool threadPool = new HTTPThreadPool(this, maxThreads, underlyingApp);
 

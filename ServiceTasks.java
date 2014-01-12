@@ -1,10 +1,7 @@
 
-
-
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-
 
 public class ServiceTasks extends ServiceAbstractScheduled<ModelTask> {
 
@@ -84,9 +81,12 @@ public class ServiceTasks extends ServiceAbstractScheduled<ModelTask> {
 	}
 
 	private String generateMessage(ModelTask task, boolean setReplyLink) {
-		String message = "Title: '" + task.getTitle() + "'\r\n" + "Content: '" + task.getContent() + "'\r\n" + "To: '"
-				+ task.getToMail() + "'\r\n" + "Due Date: '" + task.getDueDate() + "'\r\n" + "Created At: '"
-				+ task.getCreatedAt() + "'\r\n" + "User: '" + task.getUsermail() + "'\r\n";
+		String message = "Title: '" + task.getTitle() + "'\r\n" + 
+				"Content: '" + task.getContent() + "'\r\n" + 
+				"To: '" + task.getToMail() + "'\r\n" + 
+				"Due Date: '" + task.getDueDate() + "'\r\n" + 
+				"Created At: '" + task.getCreatedAt() + "'\r\n" + 
+				"User: '" + task.getUsermail() + "'\r\n";
 		if (setReplyLink) {
 			String link = "http://" + serverName + "/task_reply.html?id=" + task.getId();
 			return message + "Click here to set this task status to completed: " + link;

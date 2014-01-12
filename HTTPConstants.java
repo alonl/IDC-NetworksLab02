@@ -1,5 +1,4 @@
 
-
 public class HTTPConstants {
 
 	public static final String HEADER_CONTENT_LENGTH = "Content-Length";
@@ -9,16 +8,16 @@ public class HTTPConstants {
 	public static final String HEADER_ALLOW = "Allow";
 	public static final String HEADER_TRANSFER_ENCODING = "Transfer-Encoding";
 	public static final String HEADER_CHUNKED = "chunked";
-    public static final String HEADER_COOKIE = "Cookie";
-    public static final String HEADER_SET_COOKIE = "Set-Cookie";
-    public static final String HEADER_LOCATION = "Location";
+	public static final String HEADER_COOKIE = "Cookie";
+	public static final String HEADER_SET_COOKIE = "Set-Cookie";
+	public static final String HEADER_LOCATION = "Location";
 
 	public static final String STATUS_OK = "200 OK";
 	public static final String STATUS_NOT_FOUND = "404 Not Found";
 	public static final String STATUS_NOT_IMPLEMENTED = "501 Not Implemented";
 	public static final String STATUS_BAD_REQUEST = "400 Bad Request";
 	public static final String STATUS_INTERNAL_ERROR = "500 Internal Server Error";
-    public static final String STATUS_REDIRECT = "302 Found";
+	public static final String STATUS_REDIRECT = "302 Found";
 
 	public static final String CONTENT_TYPE_TEXT = "text/html";
 	public static final String CONTENT_TYPE_IMAGE = "image";

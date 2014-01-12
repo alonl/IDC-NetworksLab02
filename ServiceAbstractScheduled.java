@@ -1,6 +1,4 @@
 
-
-
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -9,7 +7,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-
 
 /**
  * Abstract service for the business-side of the application. Instantiates a
@@ -94,7 +91,7 @@ public abstract class ServiceAbstractScheduled<T extends ModelScheduledItem> ext
 		}
 		return res;
 	}
-	
+
 	public boolean removeNoScheduler(Integer id) throws SQLException {
 		return super.remove(id);
 	}
@@ -113,7 +110,7 @@ public abstract class ServiceAbstractScheduled<T extends ModelScheduledItem> ext
 		}
 		return false;
 	}
-	
+
 	public void updateNearest() throws SQLException {
 		logger.info("Updating nearest item...");
 		nearestItem = null;

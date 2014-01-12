@@ -1,13 +1,6 @@
 
-
 public enum HTTPMethod {
 
-	GET,
-	POST,
-	OPTIONS,
-	HEAD,
-	TRACE,
-    PUT,
-    DELETE
-	
+	GET, POST, OPTIONS, HEAD, TRACE, PUT, DELETE
+
 }

@@ -52,6 +52,12 @@ More Bonuses:
 			
 3. Ability to add comment in config.ini file
 	Usage: You can add comments to config.ini file using #.
+
+
+4. Reset button in the UI - let's you reset to the item's original data when editing.
+
+
+5. Input validation (email validity, phone number validity, ...) in the server and in the UI.
 	
 	
 	
@@ -63,7 +69,12 @@ More To Notice:
 
 
 2. External libraries: 
-	SQLite - for the DB. 
-	OrmLite - for the JDBC object mapping.
-	Jackson - for JSON de/serialization.
-	Apache Commons Codec - for Base64 encoding.
+	Server:
+		SQLite - for the DB. 
+		OrmLite - for the JDBC object mapping.
+		Jackson - for JSON de/serialization.
+		Apache Commons Codec - for Base64 encoding.
+	UI:
+		AngularJS, JQuery, Bootstrap
+	
+	

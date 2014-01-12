@@ -1,11 +1,8 @@
 
-
-
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,13 +18,13 @@ public class ModelPoll extends ModelBaseItem {
 	private static HelperLogger logger = HelperLogger.getLogger(ModelPoll.class);
 
 	@JsonDeserialize(using = JsonRecipientsDeserializer.class)
-    @JsonSerialize(using = JsonRecipientsSerializer.class)
+	@JsonSerialize(using = JsonRecipientsSerializer.class)
 	@JsonProperty(value = "recipients")
 	@DatabaseField(canBeNull = false)
 	private String recipients;
 
 	@JsonDeserialize(using = JsonAnswersDeserializer.class)
-    @JsonSerialize(using = JsonAnswersSerializer.class)
+	@JsonSerialize(using = JsonAnswersSerializer.class)
 	@JsonProperty(value = "answers")
 	@DatabaseField(canBeNull = false)
 	private String answers;
@@ -39,8 +36,8 @@ public class ModelPoll extends ModelBaseItem {
 	public ModelPoll() {
 	}
 
-	public ModelPoll(int id, Date createdAt, String usermail, String title, String content, Map<String, String> recipients,
-			List<String> answers, int received) {
+	public ModelPoll(int id, Date createdAt, String usermail, String title, String content,
+			Map<String, String> recipients, List<String> answers, int received) {
 		super(id, createdAt, usermail, title, content);
 		try {
 			setRecipients(recipients);
@@ -51,7 +48,8 @@ public class ModelPoll extends ModelBaseItem {
 		}
 	}
 
-	public ModelPoll(String usermail, String title, String content, Map<String, String> recipients, List<String> answers, int received) {
+	public ModelPoll(String usermail, String title, String content, Map<String, String> recipients,
+			List<String> answers, int received) {
 		super(usermail, title, content);
 		try {
 			setRecipients(recipients);
@@ -79,7 +77,7 @@ public class ModelPoll extends ModelBaseItem {
 	public void setAnswers(List<String> answers) throws JsonProcessingException {
 		this.answers = mapper.writeValueAsString(answers);
 	}
-	
+
 	@JsonIgnore
 	public boolean isOpen() throws IOException {
 		return getRecipients().size() != received;
@@ -96,5 +94,5 @@ public class ModelPoll extends ModelBaseItem {
 		recipients.put(recipient, answer + "");
 		this.setRecipients(recipients);
 	}
-	
+
 }

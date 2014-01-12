@@ -1,13 +1,10 @@
 
-
-
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
-
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -58,7 +55,7 @@ public abstract class ManagerAbstract<T extends ModelBaseItem> {
 			case DELETE:
 				if (relativePath.matches("\\/\\d+")) {
 					Integer itemId = Integer.parseInt(relativePath.substring(1));
-					getById(itemId, user); // authorize 
+					getById(itemId, user); // authorize
 					response = remove(itemId);
 				}
 				break;
@@ -130,7 +127,8 @@ public abstract class ManagerAbstract<T extends ModelBaseItem> {
 			} else if (requestedPage.getName().contains("reply")) {
 				return handleReply(urlParameters);
 			}
-			return ModelAppResponse.responseError(new WebServerNotFoundException("Unknown: " + requestedPage.getName()));
+			return ModelAppResponse
+					.responseError(new WebServerNotFoundException("Unknown: " + requestedPage.getName()));
 		} catch (Exception e) {
 			return ModelAppResponse.responseError(e);
 		}
@@ -140,7 +138,7 @@ public abstract class ManagerAbstract<T extends ModelBaseItem> {
 		try {
 			String id = urlParameters.get("id");
 			if (id == null || id.isEmpty()) {
-				insert(parseSubmitParamsInsert(urlParameters, user));				
+				insert(parseSubmitParamsInsert(urlParameters, user));
 			} else {
 				update(parseSubmitParamsUpdate(urlParameters, user));
 			}
@@ -152,12 +150,15 @@ public abstract class ManagerAbstract<T extends ModelBaseItem> {
 			return appResponse;
 		}
 	}
-	
-	protected abstract ModelAppResponse handleReply(Map<String, String> urlParameters) throws SQLException, WebServerBadRequestException, IOException;
 
-	protected abstract T parseSubmitParamsUpdate(Map<String, String> urlParameters, ModelUser user) throws NumberFormatException, ParseException, WebServerBadRequestException;
+	protected abstract ModelAppResponse handleReply(Map<String, String> urlParameters) throws SQLException,
+			WebServerBadRequestException, IOException;
 
-	protected abstract T parseSubmitParamsInsert(Map<String, String> urlParameters, ModelUser user) throws ParseException;
+	protected abstract T parseSubmitParamsUpdate(Map<String, String> urlParameters, ModelUser user)
+			throws NumberFormatException, ParseException, WebServerBadRequestException;
+
+	protected abstract T parseSubmitParamsInsert(Map<String, String> urlParameters, ModelUser user)
+			throws ParseException;
 
 	protected abstract String getMainPageUrl();
 

@@ -1,13 +1,10 @@
 
-
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
-
 
 /**
  * Handles Reminders requests.
@@ -29,9 +26,10 @@ public class ManagerReminders extends ManagerAbstract<ModelReminder> {
 	public String getServicePath() {
 		return HelperConstants.REMINDERS_PATH;
 	}
-	
+
 	@Override
-	protected ModelReminder parseSubmitParamsInsert(Map<String, String> urlParameters, ModelUser user) throws ParseException {
+	protected ModelReminder parseSubmitParamsInsert(Map<String, String> urlParameters, ModelUser user)
+			throws ParseException {
 		return new ModelReminder(user.getUserMail().toLowerCase(), urlParameters.get("title"),
 				urlParameters.get("content"), new Date(), format.parse(urlParameters.get("dueDate")),
 				urlParameters.get("phone"));
@@ -43,7 +41,8 @@ public class ManagerReminders extends ManagerAbstract<ModelReminder> {
 	}
 
 	@Override
-	protected ModelReminder parseSubmitParamsUpdate(Map<String, String> urlParameters, ModelUser user) throws NumberFormatException, ParseException {
+	protected ModelReminder parseSubmitParamsUpdate(Map<String, String> urlParameters, ModelUser user)
+			throws NumberFormatException, ParseException {
 		return new ModelReminder(Integer.parseInt(urlParameters.get("id")), urlParameters.get("usermail"),
 				urlParameters.get("title"), urlParameters.get("content"), null, format.parse(urlParameters
 						.get("dueDate")), urlParameters.get("phone"));

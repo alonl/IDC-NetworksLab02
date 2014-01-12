@@ -1,36 +1,33 @@
 
-
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * Handles Polls requests.
  */
 public class ManagerPoll extends ManagerAbstract<ModelPoll> {
 
-    public ManagerPoll(ServiceAbstract<ModelPoll> service) {
-        super(service);
-    }
+	public ManagerPoll(ServiceAbstract<ModelPoll> service) {
+		super(service);
+	}
 
-    @Override
-    public Class<ModelPoll> getModelClass() {
-        return ModelPoll.class;
-    }
+	@Override
+	public Class<ModelPoll> getModelClass() {
+		return ModelPoll.class;
+	}
 
-    @Override
-    public String getServicePath() {
-        return HelperConstants.POLLS_PATH;
-    }
-    
-    @Override
-    protected String getMainPageUrl() {
-    	return (HelperConstants.POLLS_MAIN);
-    }
+	@Override
+	public String getServicePath() {
+		return HelperConstants.POLLS_PATH;
+	}
+
+	@Override
+	protected String getMainPageUrl() {
+		return (HelperConstants.POLLS_MAIN);
+	}
 
 	@Override
 	protected ModelPoll parseSubmitParamsInsert(Map<String, String> urlParameters, ModelUser user) {
@@ -38,7 +35,7 @@ public class ManagerPoll extends ManagerAbstract<ModelPoll> {
 		Map<String, String> recipients = HelperUtils.parseRecipients(urlParameters.get("recipients"));
 		String title = urlParameters.get("title");
 		String content = urlParameters.get("content");
-		
+
 		ModelPoll poll = new ModelPoll(user.getUserMail(), title, content, recipients, answers, 0);
 		return poll;
 	}
@@ -49,22 +46,23 @@ public class ManagerPoll extends ManagerAbstract<ModelPoll> {
 		String recipient = urlParameters.get("recipient").toString();
 		int pollId = Integer.parseInt(urlParameters.get("id").toString());
 		int answer = Integer.parseInt(urlParameters.get("answer"));
-		
+
 		((ServicePolls) service).setRecipientAnswer(pollId, recipient, answer);
 		return ModelAppResponse.responseOK("Your vote recieved successfully. Thank you.");
 	}
-    
-    @Override
-    public ModelPoll insert(ModelPoll poll) throws SQLException, WebServerBadRequestException, WebServerRuntimeException {
-    	validateRecipientsEmails(poll);
-    	return super.insert(poll);
-    }
-    
-    @Override
-    protected ModelPoll parseSubmitParamsUpdate(Map<String, String> urlParameters, ModelUser user) throws NumberFormatException,
-    ParseException, WebServerBadRequestException {
-    	throw new WebServerBadRequestException("Missing ID value");
-    }
+
+	@Override
+	public ModelPoll insert(ModelPoll poll) throws SQLException, WebServerBadRequestException,
+			WebServerRuntimeException {
+		validateRecipientsEmails(poll);
+		return super.insert(poll);
+	}
+
+	@Override
+	protected ModelPoll parseSubmitParamsUpdate(Map<String, String> urlParameters, ModelUser user)
+			throws NumberFormatException, ParseException, WebServerBadRequestException {
+		throw new WebServerBadRequestException("Missing ID value");
+	}
 
 	private void validateRecipientsEmails(ModelPoll poll) {
 		try {

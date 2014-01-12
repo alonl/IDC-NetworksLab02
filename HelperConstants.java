@@ -1,5 +1,4 @@
 
-
 public class HelperConstants {
 
 	public static final String REMINDERS_PATH = "/reminders";

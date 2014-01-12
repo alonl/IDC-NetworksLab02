@@ -1,6 +1,4 @@
 
-
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -8,21 +6,19 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 
-
-
 public class HTTPProcessor implements Runnable {
 
-    private MainWebServer webServer;
+	private MainWebServer webServer;
 	private BlockingQueue<Socket> requestsQueue;
-    private final SMTPApp underlyingApp;
+	private final SMTPApp underlyingApp;
 	private boolean isRunning;
-	
+
 	private HelperLogger logger = new HelperLogger(this.getClass());
 
 	public HTTPProcessor(MainWebServer webServer, BlockingQueue<Socket> requestsQueue, SMTPApp underlyingApp) {
 		this.webServer = webServer;
 		this.requestsQueue = requestsQueue;
-        this.underlyingApp = underlyingApp;
+		this.underlyingApp = underlyingApp;
 		isRunning = true;
 	}
 
@@ -65,13 +61,13 @@ public class HTTPProcessor implements Runnable {
 			is = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			requestHeaders = HelperUtils.readRequestHeaders(is);
 			logger.info("The request headers: " + requestHeaders.replaceAll("[\r\n]", ", "));
-		
+
 		} catch (Exception e) {
 			logger.error("Exception occurred, ignoring the request.", e);
 			closeStreams(os, is);
 			return;
 		}
-		
+
 		logger.debug("Parsing the request...");
 		HTTPRequest httpRequest = null;
 		try {
@@ -89,7 +85,7 @@ public class HTTPProcessor implements Runnable {
 		// lab 2 addition
 		logger.debug("Processing the request...");
 		ModelAppResponse appResponse = underlyingApp.handleHttpRequest(httpRequest, is);
-		
+
 		logger.debug("Generating the response...");
 		HTTPResponse httpResponse = null;
 		try {

@@ -1,13 +1,9 @@
-
-
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map.Entry;
-
 
 public class ServicePolls extends ServiceAbstract<ModelPoll> {
 
@@ -28,7 +24,7 @@ public class ServicePolls extends ServiceAbstract<ModelPoll> {
 
 	@Override
 	public ModelPoll insert(ModelPoll poll) throws SQLException, WebServerRuntimeException {
-		ModelPoll inserted =  super.insert(poll);
+		ModelPoll inserted = super.insert(poll);
 		sendMessagesToRecipients(inserted);
 		return inserted;
 	}
@@ -71,7 +67,8 @@ public class ServicePolls extends ServiceAbstract<ModelPoll> {
 				results.append(String.format("%20s voted: Hasn't voted yet.", recipientAnswer.getKey()) + "\r\n");
 			} else {
 				Integer answer = Integer.parseInt(recipientAnswer.getValue());
-				results.append(String.format("%20s voted: %s - %s", recipientAnswer.getKey(), answer, answers.get(answer)) + "\r\n");
+				results.append(String.format("%20s voted: %s - %s", recipientAnswer.getKey(), answer,
+						answers.get(answer)) + "\r\n");
 			}
 		}
 		return results.toString();
@@ -103,10 +100,13 @@ public class ServicePolls extends ServiceAbstract<ModelPoll> {
 
 	private String generateMessage(ModelPoll poll, String recipient) throws WebServerRuntimeException, IOException {
 		String answersLinks = generateAnswersLinks(poll, recipient);
-		return "Hi, A new poll invitation. Please submit your vote by clicking one of the above links." + "\r\n"
-				+ "Title: " + poll.getTitle() + "\r\n" + "Content: " + poll.getContent() + "\r\n" + "From: "
-				+ poll.getUsermail() + "\r\n" + "Created at: " + poll.getCreatedAt() + "\r\n" + "\r\n" + "Answers: "
-				+ "\r\n" + answersLinks;
+		return "Hi, A new poll invitation. Please submit your vote by clicking one of the above links." + "\r\n" + 
+				"Title: " + poll.getTitle() + "\r\n" + 
+				"Content: " + poll.getContent() + "\r\n" + 
+				"From: " + poll.getUsermail() + "\r\n" + 
+				"Created at: " + poll.getCreatedAt() + "\r\n" + "\r\n" + 
+				"Answers: " + "\r\n" + 
+				answersLinks;
 	}
 
 	private String generateSubject(ModelPoll poll) {

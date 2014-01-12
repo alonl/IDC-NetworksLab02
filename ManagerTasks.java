@@ -1,12 +1,8 @@
 
-
-
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Map;
-
-
 
 /**
  * Handles Tasks requests.
@@ -30,7 +26,8 @@ public class ManagerTasks extends ManagerAbstract<ModelTask> {
 	}
 
 	@Override
-	public ModelTask insert(ModelTask item) throws SQLException, WebServerBadRequestException, WebServerRuntimeException {
+	public ModelTask insert(ModelTask item) throws SQLException, WebServerBadRequestException,
+			WebServerRuntimeException {
 		validateToMail(item);
 		return super.insert(item);
 	}
@@ -65,8 +62,7 @@ public class ManagerTasks extends ManagerAbstract<ModelTask> {
 			if (res) {
 				return ModelAppResponse.responseOK("Got it. Your manager thanks you.");
 			} else {
-				return ModelAppResponse
-						.responseError(new WebServerRuntimeException("Couldn't update task."));
+				return ModelAppResponse.responseError(new WebServerRuntimeException("Couldn't update task."));
 			}
 		} else {
 			return ModelAppResponse.responseError(new WebServerNotFoundException("Missing ID value."));
@@ -74,7 +70,8 @@ public class ManagerTasks extends ManagerAbstract<ModelTask> {
 	}
 
 	@Override
-	protected ModelTask parseSubmitParamsInsert(Map<String, String> urlParameters, ModelUser user) throws ParseException {
+	protected ModelTask parseSubmitParamsInsert(Map<String, String> urlParameters, ModelUser user)
+			throws ParseException {
 		return new ModelTask(user.getUserMail().toLowerCase(), urlParameters.get("content"), false,
 				format.parse(urlParameters.get("dueDate")), urlParameters.get("phone"), urlParameters.get("title"),
 				urlParameters.get("toMail"), ModelTask.TaskStatus.IN_PROGRESS);
@@ -86,8 +83,8 @@ public class ManagerTasks extends ManagerAbstract<ModelTask> {
 	}
 
 	@Override
-	protected ModelTask parseSubmitParamsUpdate(Map<String, String> urlParameters, ModelUser user) throws NumberFormatException,
-			ParseException, WebServerBadRequestException {
+	protected ModelTask parseSubmitParamsUpdate(Map<String, String> urlParameters, ModelUser user)
+			throws NumberFormatException, ParseException, WebServerBadRequestException {
 		throw new WebServerBadRequestException("Missing ID value");
 	}
 

@@ -1,6 +1,4 @@
 
-
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,42 +12,41 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-
 public class HelperUtils {
 
 	private static HelperLogger logger = HelperLogger.getLogger(HelperUtils.class);
 
 	public static List<String> parseAnswers(String answers) {
 		List<String> parsedList = new ArrayList<String>();
-	    Scanner scanner = new Scanner(answers);
-	    while (scanner.hasNextLine()) {
-	    	String line = scanner.nextLine();
-	    	if (line.isEmpty()) {
-	    		continue;
-	    	}
-	    	parsedList.add(line.trim());
-	    }
-	    scanner.close();
-	    return parsedList;
+		Scanner scanner = new Scanner(answers);
+		while (scanner.hasNextLine()) {
+			String line = scanner.nextLine();
+			if (line.isEmpty()) {
+				continue;
+			}
+			parsedList.add(line.trim());
+		}
+		scanner.close();
+		return parsedList;
 	}
 
 	public static Map<String, String> parseRecipients(String recipients) {
 		HashMap<String, String> parsedMap = new HashMap<>();
-	    Scanner scanner = new Scanner(recipients);
-	    while (scanner.hasNextLine()) {
-	    	String line = scanner.nextLine();
-	    	if (line.isEmpty()) {
-	    		continue;
-	    	}
-	    	int indexOfColon = line.indexOf(":");
-	    	if (indexOfColon == -1) {
-	    		parsedMap.put(line, null);
-	    	} else {
-	    		parsedMap.put(line.substring(0, indexOfColon).trim(), line.substring(indexOfColon + 1).trim());
-	    	}
-	    }
-	    scanner.close();
-	    return parsedMap;
+		Scanner scanner = new Scanner(recipients);
+		while (scanner.hasNextLine()) {
+			String line = scanner.nextLine();
+			if (line.isEmpty()) {
+				continue;
+			}
+			int indexOfColon = line.indexOf(":");
+			if (indexOfColon == -1) {
+				parsedMap.put(line, null);
+			} else {
+				parsedMap.put(line.substring(0, indexOfColon).trim(), line.substring(indexOfColon + 1).trim());
+			}
+		}
+		scanner.close();
+		return parsedMap;
 	}
 
 	public static String readRequestHeaders(BufferedReader is) throws IOException {
@@ -71,19 +68,22 @@ public class HelperUtils {
 		return buffer.rewind().toString();
 	}
 
-	public static String readRequestBody(BufferedReader is, HTTPRequest httpRequest) throws IOException, WebServerBadRequestException {
-	    CharBuffer buffer;
-	    try {
-	        Integer contentLength = httpRequest.getContentLength();
-	        if (contentLength == null) {
-	            throw new WebServerBadRequestException("Error. Tried to get request body but content-length header doesn't exist.");
-	        }
-	        buffer = CharBuffer.allocate(httpRequest.getContentLength());
-	    } catch (WebServerBadRequestException e) {
-	        throw new WebServerBadRequestException("Error. Tried to get request body but content-length header doesn't exist.");
-	    }
-	    is.read(buffer);
-	    return buffer.rewind().toString();
+	public static String readRequestBody(BufferedReader is, HTTPRequest httpRequest) throws IOException,
+			WebServerBadRequestException {
+		CharBuffer buffer;
+		try {
+			Integer contentLength = httpRequest.getContentLength();
+			if (contentLength == null) {
+				throw new WebServerBadRequestException(
+						"Error. Tried to get request body but content-length header doesn't exist.");
+			}
+			buffer = CharBuffer.allocate(httpRequest.getContentLength());
+		} catch (WebServerBadRequestException e) {
+			throw new WebServerBadRequestException(
+					"Error. Tried to get request body but content-length header doesn't exist.");
+		}
+		is.read(buffer);
+		return buffer.rewind().toString();
 	}
 
 	public static void parseParameters(Map<String, String> parametersMap, String params) {
@@ -107,20 +107,20 @@ public class HelperUtils {
 	}
 
 	public static byte[] readFile(File file) throws IOException {
-	    FileInputStream fis = null;
-	    try {
-	        fis = new FileInputStream(file);
-	        byte[] bFile = new byte[(int) file.length()];
-	        // read until the end of the stream.
-	        while (fis.available() != 0) {
-	            fis.read(bFile, 0, bFile.length);
-	        }
-	        return bFile;
-	    } finally {
-	        if (fis != null) {
-	            fis.close();
-	        }
-	    }
+		FileInputStream fis = null;
+		try {
+			fis = new FileInputStream(file);
+			byte[] bFile = new byte[(int) file.length()];
+			// read until the end of the stream.
+			while (fis.available() != 0) {
+				fis.read(bFile, 0, bFile.length);
+			}
+			return bFile;
+		} finally {
+			if (fis != null) {
+				fis.close();
+			}
+		}
 	}
 
 	private static void parseParameter(Map<String, String> parametersMap, String parameter)
@@ -132,21 +132,21 @@ public class HelperUtils {
 				throw new WebServerRuntimeException("Error: Invalid parameter: '" + parameter + "'");
 			}
 			String key = scanner.next();
-	
+
 			String value = "";
 			if (scanner.hasNext()) {
-	            try {
-	                value = URLDecoder.decode(scanner.next(), "UTF-8");
-	            } catch (UnsupportedEncodingException e) {
-	                // won't get here
-	            }
-	        }
-	
+				try {
+					value = URLDecoder.decode(scanner.next(), "UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					// won't get here
+				}
+			}
+
 			parametersMap.put(key, value);
-	
+
 		} finally {
 			scanner.close();
 		}
 	}
-	
+
 }

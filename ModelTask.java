@@ -1,5 +1,4 @@
 
-
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,9 +19,9 @@ public class ModelTask extends ModelScheduledItem {
 
 	public ModelTask() {
 	}
-	
-	public ModelTask(String usermail, String content, boolean isDue, Date dueDate, String phone, String title, String toMail,
-			TaskStatus status) {
+
+	public ModelTask(String usermail, String content, boolean isDue, Date dueDate, String phone, String title,
+			String toMail, TaskStatus status) {
 		super(usermail, content, isDue, dueDate, phone, title);
 		this.toMail = toMail;
 		this.status = status;
