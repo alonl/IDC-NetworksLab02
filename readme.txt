@@ -1,92 +1,141 @@
-ReadMe:
-
-In this lab we have bulit SMTP client and a task manager named ZCOR'TO that provides the following services:
-o E-mail reminder
-o Add and assign task + reminder of due date
-o Poll a group
-
-in addition we have implmented cool extra features that we will describe in bonus.txt
-
-Our classes and pages:
-1. SMTPClient
-- SMTPClient.java : send messages throgh smtp
-- SMTPThreadPool.java :threadpool that opens SMTP client threads (for concurrency) 
-
-2. index.html
-allow users to log-in with their mail address
-
-3. main.html
-main page for the application
-
-4. reminders classes
+Major Bonuses:
 
 
+1. Deployed on the cloud, on Amazon Web Services.
+	Usage: http://ec2-54-194-75-124.eu-west-1.compute.amazonaws.com:8080/
+
+	
+2. Full REST API
+	Usage: Here is the usage description with Reminders. The usage with Tasks and Polls is the same.
+					Desc.		-	Method	-	Path				-	Body Entity
+					Get All		-	GET		-	/reminders
+					Get One		-	GET		-	/reminders/$id
+					Insert One	-	POST	-	/reminders			-	Reminder JSON
+					Update One	-	PUT		-	/reminders			-	Reminder JSON
+					Delete One	-	DELETE	-	/reminders/$id
+	Explanation: Used Jackson for de/serialization.
+	Note: The exercise instructions were kept in the REST API as well. In Get All request, for example, a user will get only his items.
+					
+
+3. Responsive One Page UI - Using AngularJS
+	Usage: On the main page, click on "Switch to Premium Mode". Then, click on any of the links (Reminders / Tasks / Polls).
+	Explanation: Implemented using AngularJS. Now, you can view, create, update and delete items without navigating to other pages.
+					REST requests are being called on the background...
+
+					
+4. Send an SMS, in addition to a mail message.
+	Usage: On Reminder or Task, you can add your phone number, and you will recieve an SMS, in addition to every mail message.
+	Explanation: Implemented using an Android application which is used as a gateway.
+					The phone polls messages from a designated mail address, and sends any message with a phone number in the subject.
 
 
 
-6. polls classes
-
-- 
-
-Main classes: 
-- Runner.java : reads the config.ini and starts the server 
-- MainRouter.java : the main router of the app routes the requests to the designated manager
-- WebServer.java : starts the HTTP server  
-- SMTPApp.java : starts the underlying app
-
-Managers classes: 
-- RemindersManager.java : to handle user requests for remainders 
-- TasksManager.java : to handle user requests for tasks
-- PollsManager.java : to handle user requests for polls
-- ResourcesManager.java : to handle user requests to static resources 
-
-Generic classes:
-- BaseItem.java : the base item in our app
-- ScheduledItem.java : extends baseItem- adds schedualing attributes 
-- AbstractManager.java : application asspect- an abstract namager to handle user requests 
-- AbstractRepository.java : persists the data
-- AbstractScheduledRepository.java : extends AbstractRepository, persists the data of scheduled items
-- AbstractScheduledService.java : extends absract service for handling with scheduled items
-- AbstractService.java : handles the buisines asspect of the app
+	
+More Bonuses:
 
 
-Helper classes: 
-- HTTPConstants.java
-- HTTPMethod.java : enoumeration 
+1. The all source code is on GitHub:
+	Usage: http://github.com/alonl/IDC-NetworksLab02
+
+	
+2. Added a thread pool of SMTP clients.
+	Explanation: Sending a mail message may take time, and we wanted to parallel it and make it asynchronous.
+	
+	
+3. Logger class.
+	Usage: You can configure the Log Level of the logger in the config.ini
+			DEBUG for debug level and above
+			INFO for informative messages and above
+			WARN for warnings and above
+			ERROR for errors only.
+
+			
+3. Ability to add comment in config.ini file
+	Usage: You can add comments to config.ini file using #.
+	
+	
+	
+	
+More To Notice:
+	
+	
+1. The whole project is implemented using generics and inheritance widely.
 
 
-Exceptions classes:
-- WebServerBadRequestException.java
-- WebServerNotFoundException.java
-- WebServerRuntimeException.java
-
-Web server classes: (from lab1)
-- HTTPProcessor.java
-- HTTPRequest.java
-- HTTPResponse.java
-- HTTPThreadPool.java
-- HTTPUtils.java
-
-Models:
-- User.java
-- Reminder.java
-- Task.java
-- Poll.java
-- AppResponse.java
-- MailMessage.java
-
-Services:
-- TasksService.java
-- ReminderService.java
-- PollsService.java
-
-Others:
-- Logger.java
-- CustomDateSerializer.java
-- CustomJsonDateDeserializer.java
+2. External libraries: 
+	SQLite - for the DB. 
+	OrmLite - for the JDBC object mapping.
+	Jackson - for JSON de/serialization.
+	Apache Commons Codec - for Base64 encoding.
 
 
 
 
 
 
+
+Classes Roles:
+
+Main:
+MainRunner.java - The main runner of the application. Runs the HTTP server and the underlying app.
+MainRouter.java - The main router of the app. Gets the HTTP request (method, path, cookie...) and routes to the designated request handler.
+MainWebServer.java - The HTTP server runner.
+
+SMTP App:
+SMTPApp.java - The app runner.
+SMTPThreadPool.java - Multi-threaded, asynchronous non-blocking (thread pool) SMTP client.
+SMTPClient.java - Simple SMTP for sending email messages.
+
+Application:
+ManagerAbstract.java - Abstract Manager for the application - user side logic - of our web app.
+ManagerPoll.java - Handles Poll requests.
+ManagerReminders.java - Handles Reminder requests.
+ManagerTasks.java - Handles Task requests.
+ManagerResources.java - Handles requests for static resources.
+
+Models: - Basic object classes to represents our models.
+ModelAppResponse.java - Represents the HTTP response from the underlying app.
+ModelUser.java - Represents a user (by email address).
+ModelMailMessage.java - Represents a mail message.
+ModelBaseItem.java - The super class of an item to be saved in the database.
+ModelScheduledItem.java - Extends ModelBaseItem. Adds functionality for "scheduled items".
+ModelPoll.java - Extends BaseItem. Represents a Poll.
+ModelReminder.java - Extends ModelScheduledItem. Represents a Reminder.
+ModelTask.java - Extends ModelScheduledItem. Represents a Task.
+
+Repository:
+RepositoryAbstract.java - Abstract repository for the persistence of our database.
+RepositoryAbstractScheduled.java - Extends RepositoryAbstract. Adds scheduled items funcionality.
+
+Business:
+ServiceAbstract.java - Abstract service for the business-side of the application.
+ServiceAbstractScheduled.java - Extends ServiceAbstract. Holds the nearest job to run, and updates it, if necessary, on every new item.
+ServicePolls.java - Extends ServiceAbstract. Handles any Polls actions.
+ServiceReminder.java - Extends ServiceAbstractScheduled. Handles any Reminders actions.
+ServiceTasks.java - Extends ServiceAbstractScheduled. Handles any Tasks actions.
+
+HTTP Web Server: - All classes from Lab 1
+HTTPConstants.java
+HTTPMethod.java
+HTTPProcessor.java
+HTTPRequest.java
+HTTPResponse.java
+HTTPThreadPool.java
+
+Helpers:
+HelperConstants.java - Some app constants
+HelperLogger.java - A logger class. Adds date and time, class name and log level to each log message. Can be configured from config.ini.
+HelperUtils.java - Some common utils that are used throughout the app.
+
+Jackson JSON De/Serializers:
+JsonAnswersDeserializer.java - De/serializes the answers of the polls (CRLF delimited)
+JsonAnswersSerializer.java
+JsonDateDeserializer.java - De/serializes dates to comply with the UI.
+JsonDateSerializer.java
+JsonRecipientsDeserializer.java - De/serializes the recipients of the polls (CRLF delimited, colon between recipient and its answer)
+JsonRecipientsSerializer.java
+
+Exceptions:
+WebServerBadRequestException.java - Represents an error occurred following a bad request. (4xx status code)
+WebServerNotFoundException.java - Represents an error occurred following a request for an unknown resource. (404 status code)
+WebServerRuntimeException.java - Represents an error occurred in the server. (5xx status code)

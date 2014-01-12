@@ -1,0 +1,69 @@
+Major Bonuses:
+
+
+1. Deployed on the cloud, on Amazon Web Services.
+	Usage: http://ec2-54-194-75-124.eu-west-1.compute.amazonaws.com:8080/
+
+	
+2. Full REST API
+	Usage: Here is the usage description with Reminders. The usage with Tasks and Polls is the same.
+					Desc.		-	Method	-	Path				-	Body Entity
+					Get All		-	GET		-	/reminders
+					Get One		-	GET		-	/reminders/$id
+					Insert One	-	POST	-	/reminders			-	Reminder JSON
+					Update One	-	PUT		-	/reminders			-	Reminder JSON
+					Delete One	-	DELETE	-	/reminders/$id
+	Explanation: Used Jackson for de/serialization.
+	Note: The exercise instructions were kept in the REST API as well. In Get All request, for example, a user will get only his items.
+					
+
+3. Responsive One Page UI - Using AngularJS
+	Usage: On the main page, click on "Switch to Premium Mode". Then, click on any of the links (Reminders / Tasks / Polls).
+	Explanation: Implemented using AngularJS. Now, you can view, create, update and delete items without navigating to other pages.
+					REST requests are being called on the background...
+
+					
+4. Send an SMS, in addition to a mail message.
+	Usage: On Reminder or Task, you can add your phone number, and you will recieve an SMS, in addition to every mail message.
+	Explanation: Implemented using an Android application which is used as a gateway.
+					The phone polls messages from a designated mail address, and sends any message with a phone number in the subject.
+
+
+
+	
+More Bonuses:
+
+
+1. The all source code is on GitHub:
+	Usage: http://github.com/alonl/IDC-NetworksLab02
+
+	
+2. Added a thread pool of SMTP clients.
+	Explanation: Sending a mail message may take time, and we wanted to parallel it and make it asynchronous.
+	
+	
+3. Logger class.
+	Usage: You can configure the Log Level of the logger in the config.ini
+			DEBUG for debug level and above
+			INFO for informative messages and above
+			WARN for warnings and above
+			ERROR for errors only.
+
+			
+3. Ability to add comment in config.ini file
+	Usage: You can add comments to config.ini file using #.
+	
+	
+	
+	
+More To Notice:
+	
+	
+1. The whole project is implemented using generics and inheritance widely.
+
+
+2. External libraries: 
+	SQLite - for the DB. 
+	OrmLite - for the JDBC object mapping.
+	Jackson - for JSON de/serialization.
+	Apache Commons Codec - for Base64 encoding.
