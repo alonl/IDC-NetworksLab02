@@ -120,7 +120,8 @@ public class ServicePolls extends ServiceAbstract<ModelPoll> {
 				+ URLEncoder.encode(recipient, "UTF-8") + "&id=" + poll.getId();
 		int index = 0;
 		for (String answer : poll.getAnswers()) {
-			answersLinks.append(voteFor + index++ + " - " + answer + " - " + answerLink + "&answer=" + index + "\r\n");
+			answersLinks.append(voteFor + index + " - " + answer + " - " + answerLink + "&answer=" + index + "\r\n");
+			index++;
 		}
 		return answersLinks.toString();
 	}
